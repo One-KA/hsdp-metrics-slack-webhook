@@ -26,7 +26,10 @@ def hook_to_hook():
         if alert['status'] == 'firing':
             status = '*opened*'
         message.append('*Message:*')
-        message.append( alert['annotations']['description'])
+        if alert['status'] == 'resolved':
+            message.append( alert['annotations']['summary'])
+        if alert['status'] == 'firing':
+            message.append( alert['annotations']['description'])
         slack_payload = {"text": "*Incident* " + status + "\n",
                          "attachments": [
                             {
